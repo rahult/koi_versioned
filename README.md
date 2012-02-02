@@ -12,23 +12,25 @@ Adds capability to ActiveRecord for storing drafts
 
 ###Usage###
 
-    post = Post.create(title: "Guide to Git", body: "Git rocks my world!!!")
+```ruby
+post = Post.create(title: "Guide to Git", body: "Git rocks my world!!!")
 
-    post.title = "Subversion to Git"
-    post.draft!
+post.title = "Subversion to Git"
+post.draft!
 
-    post.draft?
-    true
+post.draft?
+true
 
-    post.title
-    "Guide to Git"
+post.title
+"Guide to Git"
 
-    post.draft.title
-    "Subversion to Git"
+post.draft.title
+"Subversion to Git"
 
-    post.publish?
-    true
+post.publish?
+true
 
-    post.title
-    "Subversion to Git"
+post.title
+"Subversion to Git"
+```
 

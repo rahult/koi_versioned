@@ -13,22 +13,24 @@ gem "jquery-rails"
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-group :development, :test do
-  # Database
-  gem 'sqlite3'
-  # Debugging and Analysis
-  gem 'ruby-debug19'
-  # Testing framework
-  gem 'rspec-rails', '2.8.1'
-  # Console Replacement
-  gem 'pry'
-  # Fixture Replacement
-  gem 'factory_girl_rails'
-  # Fake Data
-  gem 'forgery'
-end
+# Database
+gem 'sqlite3'
 
-group :development do
-  # Powder makes POW easy
-  gem 'powder'
-end
+# Debugging and Analysis
+gem 'ruby-debug19'
+
+# Testing framework
+gem 'rspec-rails', '2.8.1'
+
+# Console Replacement
+gem 'pry'
+
+# Fixture Replacement
+gem 'factory_girl_rails'
+
+# Fake Data
+gem 'forgery'
+
+# Powder makes POW easy
+gem 'powder'
+

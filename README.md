@@ -5,9 +5,11 @@ Adds capability to ActiveRecord for storing drafts
 
 ###Active Record###
 
-    class Post < ActiveRecord::Base
-      koi_draftable
-    end 
+```ruby
+class Post < ActiveRecord::Base
+  koi_draftable
+end
+``` 
 
 
 ###Usage###

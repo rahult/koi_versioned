@@ -7,11 +7,11 @@ require "koi_versioned/version"
 Gem::Specification.new do |s|
   s.name        = "koi_versioned"
   s.version     = KoiVersioned::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of KoiVersioned."
-  s.description = "TODO: Description of KoiVersioned."
+  s.authors     = ["Rahul Trikha"]
+  s.email       = ["rahul@katalyst.com.au"]
+  s.homepage    = "https://github.com/rahult/koi_versioned"
+  s.summary     = "Adds an ability to store draft for an ActiveRecord model"
+  s.description = "Provides ability for an ActiveRecord model to store its attributes in a draft state."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
@@ -20,3 +20,4 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sqlite3"
 end
+

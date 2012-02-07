@@ -9,11 +9,6 @@ class PostTest < ActiveSupport::TestCase
     assert @post
   end
 
-  test "should save new post in draft state by default" do
-    assert @post.is_draft?
-    assert !@post.is_published?
-  end
-
   test "should respond to is_published?" do
     assert @post.respond_to?(:is_published?)
   end
@@ -26,10 +21,22 @@ class PostTest < ActiveSupport::TestCase
     assert @post.respond_to?(:publish!)
   end
 
+  test "should save new post in draft state by default" do
+    assert @post.is_draft?
+    assert !@post.is_published?
+  end
+
   test "should have the ability to publish" do
     assert @post.is_draft?
     @post.publish!
     assert @post.is_published?
+  end
+
+  test "should have the ability to create a new published post" do
+    published_post = Factory(:published_post)
+    assert published_post
+    assert published_post.is_published?
+    assert !published_post.is_draft?
   end
 
   test "should update post attributes with draft after publish!" do
@@ -51,7 +58,11 @@ class PostTest < ActiveSupport::TestCase
     assert_equal original_updated_at, @post.updated_at
   end
 
-  test "should have the ability to return draft record" do
+  test "when the record has no published version" do
+    assert_equal @post.title, @post.draft.title
+  end
+
+  test "when the record has an updated draft and no published version" do
     changed_title = @post.title.reverse
     @post.title = changed_title
     @post.draft!

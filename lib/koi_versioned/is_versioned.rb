@@ -25,7 +25,7 @@ module KoiVersioned
     end
 
     def draft
-      return nil if !is_draft?
+      return nil unless is_draft?
 
       version_draft.each do |k, v|
         begin
@@ -54,8 +54,8 @@ module KoiVersioned
     end
 
     def draft!
-      # Only proceed if record has changed and already has a published version
-      return true if !changed? && !is_published?
+      # Only proceed if record has changed
+      return true if !changed?
 
       # Store all attributes temporarily skipping read only attributes
       draft = attributes.reject { |key, value| ignore_columns.include? key }

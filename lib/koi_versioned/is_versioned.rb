@@ -7,7 +7,7 @@ module KoiVersioned
 
     module ClassMethods
       def is_versioned
-        before_create :set_version_state
+        before_save :set_version_state
         serialize :version_draft, Hash
       end
     end
@@ -18,6 +18,7 @@ module KoiVersioned
 
     def set_version_state
       self.version_state = false if version_state.nil?
+      # Returning true explicitly to make callback chain work
       true
     end
 
@@ -26,7 +27,7 @@ module KoiVersioned
     end
 
     def is_draft?
-      true
+      is_published? ? !version_draft.blank? : true
     end
 
     def publish!

@@ -1,5 +1,3 @@
 class Post < ActiveRecord::Base
-  def published?
-    true
-  end
+  is_versioned
 end

@@ -8,7 +8,7 @@ gem 'sqlite3'
 
 group :test do
   # Pretty test output
-  gem 'turn', :require => false
+  gem 'turn'
 end
 
 gemspec

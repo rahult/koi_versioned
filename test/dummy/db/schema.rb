@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(:version => 20120131124226) do
     t.text     "body"
     t.date     "published_at"
     t.boolean  "active"
-    t.boolean  "published"
-    t.text     "draft"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.boolean  "version_state"
+    t.text     "version_draft"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end

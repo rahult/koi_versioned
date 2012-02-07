@@ -5,8 +5,8 @@ class CreatePosts < ActiveRecord::Migration
       t.text :body
       t.date :published_at
       t.boolean :active
-      t.boolean :published
-      t.text :draft
+      t.boolean :version_state
+      t.text :version_draft
 
       t.timestamps
     end

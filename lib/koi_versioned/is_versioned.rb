@@ -23,6 +23,12 @@ module KoiVersioned
     def is_draft?
       true
     end
+
+    def publish!
+      self.version_state = true
+      self.version_draft = nil
+      save
+    end
   end
 end
 

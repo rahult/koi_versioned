@@ -14,14 +14,23 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "should respond to is_published?" do
-    post = Post.new
-    post.save
-    assert post.respond_to?(:is_published?)
+    assert Post.new.respond_to?(:is_published?)
   end
 
   test "should respond to is_draft?" do
+    assert Post.new.respond_to?(:is_draft?)
+  end
+
+  test "should respond to publish!" do
+    assert Post.new.respond_to?(:publish!)
+  end
+
+  test "should have the ability to publish" do
     post = Post.new
     post.save
-    assert post.respond_to?(:is_draft?)
+    assert post.is_draft?
+    post.publish!
+    post.publish!
+    assert post.is_published?
   end
 end

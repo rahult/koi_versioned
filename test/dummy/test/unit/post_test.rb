@@ -6,7 +6,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "should create new post" do
-    assert Factory(:post).save
+    assert @post
   end
 
   test "should save new post in draft state by default" do

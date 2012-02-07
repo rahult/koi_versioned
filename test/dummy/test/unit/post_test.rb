@@ -30,7 +30,6 @@ class PostTest < ActiveSupport::TestCase
     post.save
     assert post.is_draft?
     post.publish!
-    post.publish!
     assert post.is_published?
   end
 end

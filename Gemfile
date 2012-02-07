@@ -5,8 +5,10 @@ gemspec
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
 
-# Debugging and Analysis
-gem 'ruby-debug19'
+group :development do
+  # Debugging and Analysis
+  gem 'ruby-debug19'
+end
 
 # Console Replacement
 gem 'pry'

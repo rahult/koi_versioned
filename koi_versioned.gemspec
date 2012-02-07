@@ -22,6 +22,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails', '>= 1.2.0'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'forgery'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'powder'
+  s.add_development_dependency 'guard'
+  s.add_development_dependency 'guard-test'
+  s.add_development_dependency 'guard-livereload'
+  s.add_development_dependency 'ruby_gntp'
 
   s.add_dependency "rails", "~> 3.2"
 end

@@ -7,7 +7,6 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "should respond to published?" do
-    pending
     post = Post.new
     post.save
     assert post.published?

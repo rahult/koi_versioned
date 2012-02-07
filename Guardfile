@@ -7,8 +7,8 @@ guard :test do
   watch('test/test_helper.rb')  { "test" }
 
   # Rails example
-  watch(%r{^app/models/(.+)\.rb$})                   { |m| "test/unit/#{m[1]}_test.rb" }
-  watch(%r{^app/controllers/(.+)\.rb$})              { |m| "test/functional/#{m[1]}_test.rb" }
-  watch(%r{^app/views/.+\.rb$})                      { "test/integration" }
-  watch('app/controllers/application_controller.rb') { ["test/functional", "test/integration"] }
+  watch(%r{^test/dummy/app/models/(.+)\.rb$})                   { |m| "test/dummy/test/unit/#{m[1]}_test.rb" }
+  watch(%r{^test/dummy/app/controllers/(.+)\.rb$})              { |m| "test/dummy/test/functional/#{m[1]}_test.rb" }
+  watch(%r{^test/dummy/app/views/.+\.rb$})                      { "test/dummy/test/integration" }
+  watch('test/dummy/app/controllers/application_controller.rb') { ["test/functional", "test/integration"] }
 end

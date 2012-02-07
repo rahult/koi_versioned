@@ -2,6 +2,8 @@ module KoiVersioned
   module IsVersioned
     extend ActiveSupport::Concern
 
+    class NoDraftFoundException < Exception; end
+
     included do
     end
 
@@ -22,6 +24,20 @@ module KoiVersioned
       true
     end
 
+    def draft
+      return nil if !is_draft?
+
+      version_draft.each do |k, v|
+        begin
+          send :write_attribute, k.to_sym , v
+        rescue NoMethodError
+          logger.warn "Attribute #{k} does not exist on #{self.class} (id: #{id})."
+        end
+      end
+
+      self
+    end
+
     def is_published?
       !!version_state
     end
@@ -31,6 +47,7 @@ module KoiVersioned
     end
 
     def publish!
+      self.attributes = version_draft if is_draft?
       self.version_state = true
       self.version_draft = nil
       save

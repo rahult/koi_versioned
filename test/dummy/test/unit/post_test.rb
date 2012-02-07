@@ -35,6 +35,7 @@ class PostTest < ActiveSupport::TestCase
   test "should update post attributes with draft after publish!" do
     changed_title = @post.title.reverse
     @post.title = changed_title
+    @post.draft!
     @post.publish!
     assert @post.is_published?
     assert_equal changed_title, @post.title
@@ -48,5 +49,12 @@ class PostTest < ActiveSupport::TestCase
     @post.draft!
     assert_equal original_title, @post.title
     assert_equal original_updated_at, @post.updated_at
+  end
+
+  test "should have the ability to return draft record" do
+    changed_title = @post.title.reverse
+    @post.title = changed_title
+    @post.draft!
+    assert_equal changed_title, @post.draft.title
   end
 end

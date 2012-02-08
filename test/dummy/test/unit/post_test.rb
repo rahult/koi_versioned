@@ -21,6 +21,10 @@ class PostTest < ActiveSupport::TestCase
     assert @post.respond_to?(:publish!)
   end
 
+  test "should respond to revert!" do
+    assert @post.respond_to?(:revert!)
+  end
+
   test "should save new post in draft state by default" do
     assert @post.is_draft?
     assert !@post.is_published?
@@ -40,15 +44,17 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "should update post attributes with draft after publish!" do
+    original_title = @post.title
     changed_title = @post.title.reverse
     @post.title = changed_title
     @post.draft!
+    assert_equal original_title, @post.title
     @post.publish!
     assert @post.is_published?
     assert_equal changed_title, @post.title
   end
 
-  test "should keep original post attributes after saving draft" do
+  test "should keep published post attributes after saving draft" do
     original_title = @post.title
     original_updated_at = @post.updated_at
     changed_title = original_title.reverse
@@ -66,6 +72,19 @@ class PostTest < ActiveSupport::TestCase
     changed_title = @post.title.reverse
     @post.title = changed_title
     @post.draft!
+    # assert_equal changed_title, @post.title
     assert_equal changed_title, @post.draft.title
+  end
+
+  test "should revert to published state when asked to revert" do
+    @post.publish!
+    published_title = @post.title
+    @post.title = published_title.reverse
+    @post.draft!
+    assert @post.is_draft?
+    assert @post.is_published?
+    @post.revert!
+    assert !@post.is_draft?
+    assert_equal published_title, @post.title
   end
 end

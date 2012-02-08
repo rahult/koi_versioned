@@ -39,7 +39,7 @@ module KoiVersioned
     end
 
     def is_published?
-      !!version_state
+      version_state
     end
 
     def is_draft?
@@ -48,6 +48,7 @@ module KoiVersioned
 
     def publish!
       self.attributes = version_draft if is_draft?
+      #FIXME: Change true to publish
       self.version_state = true
       self.version_draft = nil
       save
@@ -57,7 +58,7 @@ module KoiVersioned
       # Only proceed if record has changed
       return true if !changed?
 
-      # Store all attributes temporarily skipping read only attributes
+      # Store all attributes temporarily skipping ignored columns
       draft = attributes.reject { |key, value| ignore_columns.include? key }
 
       # Realod attributes from the database to clear all dirty attributes
@@ -75,6 +76,10 @@ module KoiVersioned
         # Re-enable time stamp updates
         self.class.record_timestamps = true
       end
+    end
+
+    def revert!
+      update_attribute(:version_draft, nil)
     end
   end
 end

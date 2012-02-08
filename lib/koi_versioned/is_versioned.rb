@@ -47,7 +47,9 @@ module KoiVersioned
     end
 
     def publish!
-      self.attributes = version_draft if is_draft?
+      # Load draft version if draft is present?
+      draft if is_draft?
+
       #FIXME: Change true to publish
       self.version_state = true
       self.version_draft = nil
@@ -57,6 +59,9 @@ module KoiVersioned
     def draft!
       # Only proceed if record has changed
       return true if !changed?
+
+      # If record has only draft state just save record normally
+      return save unless is_published?
 
       # Store all attributes temporarily skipping ignored columns
       draft = attributes.reject { |key, value| ignore_columns.include? key }

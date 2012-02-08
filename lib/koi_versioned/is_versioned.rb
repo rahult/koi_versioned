@@ -4,12 +4,8 @@ module KoiVersioned
 
     class NoDraftFoundException < Exception; end
 
-    included do
-    end
-
     module ClassMethods
       def is_versioned
-        before_save :set_version_state
         serialize :version_draft, Hash
       end
     end
@@ -18,13 +14,49 @@ module KoiVersioned
       ["id", "version_state", "version_draft", "created_at", "updated_at"]
     end
 
-    def set_version_state
-      self.version_state = false if version_state.nil?
-      # Returning true explicitly to make callback chain work
-      true
+    def version
+      @version ||= false
     end
 
-    def draft
+    def version=(value=false)
+      @version = value
+    end
+
+    def is_published?
+      !!version_state
+    end
+
+    def is_draft?
+      is_published? ? !version_draft.blank? : true
+    end
+
+    def publish!
+      self.version = true
+      save
+    end
+
+    def draft!
+      self.version = false
+      save
+    end
+
+    def save(*)
+      version ? publish : draft
+
+      begin
+        super
+      ensure
+        self.class.record_timestamps = true
+      end
+    end
+
+    def revert!
+      return true unless is_published?
+      self.version = true
+      update_attributes(version_draft: nil)
+    end
+
+    def draft_version
       return nil unless is_draft?
 
       version_draft.each do |k, v|
@@ -38,53 +70,33 @@ module KoiVersioned
       self
     end
 
-    def is_published?
-      version_state
-    end
+  private
 
-    def is_draft?
-      is_published? ? !version_draft.blank? : true
-    end
-
-    def publish!
+    def publish
       # Load draft version if draft is present?
-      draft if is_draft?
+      draft_version if is_draft?
 
       #FIXME: Change true to publish
       self.version_state = true
       self.version_draft = nil
-      save
     end
 
-    def draft!
-      # Only proceed if record has changed
-      return true if !changed?
-
-      # If record has only draft state just save record normally
-      return save unless is_published?
+    def draft
+      # Only proceed if record has changed or is not published
+      return true if !changed? || !is_published?
 
       # Store all attributes temporarily skipping ignored columns
-      draft = attributes.reject { |key, value| ignore_columns.include? key }
+      draft_attributes = attributes.reject { |key, value| ignore_columns.include? key }
 
-      # Realod attributes from the database to clear all dirty attributes
-      reload
+      # Reload attributes from the database to clear all dirty attributes
+      # and deactivate timestamps before saving the record
+      unless new_record?
+        reload
+        self.class.record_timestamps = false
+      end
 
       # Save draft in version_draft
-      self.version_draft = draft
-
-      # Temporarily disable time stamp updates as we do not want to record draft updated_at time
-      self.class.record_timestamps = false
-      begin
-        # Saves the record
-        save
-      ensure
-        # Re-enable time stamp updates
-        self.class.record_timestamps = true
-      end
-    end
-
-    def revert!
-      update_attribute(:version_draft, nil)
+      self.version_draft = draft_attributes
     end
   end
 end

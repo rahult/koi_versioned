@@ -51,8 +51,8 @@ class PostTest < ActiveSupport::TestCase
     @draft_post.title = changed_title
     @draft_post.draft!
     @draft_post.reload
-    assert_not_equal original_title, @draft_post.draft.title
-    assert_equal changed_title, @draft_post.draft.title
+    assert_not_equal original_title, @draft_post.draft_version.title
+    assert_equal changed_title, @draft_post.draft_version.title
   end
 
   test "should update post content with draft version after publish!" do
@@ -76,7 +76,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test "when the record has no published version" do
-    assert_equal @draft_post.title, @draft_post.draft.title
+    assert_equal @draft_post.title, @draft_post.draft_version.title
   end
 
   test "when the record has an updated draft and no published version" do
@@ -85,7 +85,7 @@ class PostTest < ActiveSupport::TestCase
     @draft_post.draft!
     @draft_post.reload
     assert_equal changed_title, @draft_post.title
-    assert_equal changed_title, @draft_post.draft.title
+    assert_equal changed_title, @draft_post.draft_version.title
   end
 
   test "should revert to published state when asked to revert" do
@@ -99,5 +99,42 @@ class PostTest < ActiveSupport::TestCase
     @published_post.reload
     assert !@published_post.is_draft?
     assert_equal published_title, @published_post.title
+  end
+
+  test "should publish a record by passing version: true to save" do
+    original_title = @draft_post.title
+    changed_title = original_title.reverse
+    @draft_post.title = changed_title
+    @draft_post.version = true
+    @draft_post.save
+    @draft_post.reload
+    assert !@draft_post.is_draft?
+    assert @draft_post.is_published?
+    assert_equal changed_title, @draft_post.title
+  end
+
+  test "should publish a record by passing version: true to update_attributes" do
+    original_title = @draft_post.title
+    changed_title = original_title.reverse
+    @draft_post.update_attributes(title: changed_title, version: true)
+    @draft_post.reload
+    assert !@draft_post.is_draft?
+    assert @draft_post.is_published?
+    assert_equal changed_title, @draft_post.title
+  end
+
+  test "should store a record as draft by passing version: false to create" do
+    draft_post = Factory(:post, version: false)
+    original_title = draft_post.title
+    assert draft_post.is_draft?
+    assert !draft_post.is_published?
+    assert_equal original_title, draft_post.title
+  end
+
+  test "should store a record as draft by passing no version attribute" do
+    original_title = @draft_post.title
+    assert @draft_post.is_draft?
+    assert !@draft_post.is_published?
+    assert_equal original_title, @draft_post.title
   end
 end

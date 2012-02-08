@@ -23,8 +23,24 @@ class PostTest < ActiveSupport::TestCase
     assert @draft_post.respond_to?(:publish!)
   end
 
+  test "should respond to draft!" do
+    assert @draft_post.respond_to?(:draft!)
+  end
+
   test "should respond to revert!" do
     assert @draft_post.respond_to?(:revert!)
+  end
+
+  test "should not respond to publish directly" do
+    assert !@draft_post.respond_to?(:publish)
+  end
+
+  test "should not respond to draft!" do
+    assert !@draft_post.respond_to?(:draft)
+  end
+
+  test "should not respond to revert!" do
+    assert !@draft_post.respond_to?(:revert)
   end
 
   test "should save new post in draft state by default" do

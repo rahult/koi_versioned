@@ -88,7 +88,7 @@ class PostTest < ActiveSupport::TestCase
     @published_post.draft!
     @published_post.reload
     assert_equal original_title, @published_post.title
-    assert_equal original_updated_at, @published_post.updated_at
+    assert_equal original_updated_at.to_s(:db), @published_post.updated_at.to_s(:db)
   end
 
   test "when the record has no published version" do

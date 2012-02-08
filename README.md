@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/rahult/koi_versioned.png)](http://travis-ci.org/rahult/koi_versioned)
+
 #Koi Versioned#
 
 Adds capability to ActiveRecord for storing drafts
@@ -9,7 +11,7 @@ Adds capability to ActiveRecord for storing drafts
 class Post < ActiveRecord::Base
   koi_draftable
 end
-``` 
+```
 
 
 ###Usage###

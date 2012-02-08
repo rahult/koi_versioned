@@ -7,11 +7,22 @@ module KoiVersioned
     module ClassMethods
       def is_versioned
         serialize :version_draft, Hash
+        before_save :set_version_data
+        scope :published, where("version_state = ?", true)
+        scope :draft, where("version_state = ? OR (version_draft NOT LIKE ? AND version_state = ?)", false, '--- !!null%', true)
       end
     end
 
     def ignore_columns
       ["id", "version_state", "version_draft", "created_at", "updated_at"]
+    end
+
+    def set_version_data
+      self.version_state ||= false
+      self.version_draft = nil if version_draft.blank?
+
+      # Explicitly return true to continue callback chain
+      return true
     end
 
     def version

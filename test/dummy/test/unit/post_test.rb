@@ -137,4 +137,22 @@ class PostTest < ActiveSupport::TestCase
     assert !@draft_post.is_published?
     assert_equal original_title, @draft_post.title
   end
+
+  test "should provide scopes for accessing draft and published records" do
+    published_records_count = 5
+    draft_records_count = 5
+    published = []
+    published_records_count.times { published << Factory(:published_post) }
+    drafts = []
+    draft_records_count.times { drafts << Factory(:post) }
+    published_draft_records_count = 2
+    published_draft_records_count.times do |i|
+      published[i].title = published[i].title.reverse
+      published[i].draft!
+    end
+    draft_published_records_count = 2
+    draft_published_records_count.times { |i| drafts[i].publish! }
+    assert_equal published_records_count + published_draft_records_count + 1, Post.published.count
+    assert_equal draft_records_count + published_draft_records_count - draft_published_records_count + 1, Post.draft.count
+  end
 end

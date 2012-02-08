@@ -1,2 +1,5 @@
 rvm:
   - 1.9.2
+before_script:
+  - "cp test/dummy/config/database.example.yml test/dummy/config/database.yml"
+  - "bundle exec rake db:create db:schema:load"

@@ -1,3 +1,4 @@
 script: "bundle exec rake -f test/dummy/Rakefile db:drop db:create db:migrate; bundle exec rake"
 rvm:
   - 1.9.2
+  - 1.9.3

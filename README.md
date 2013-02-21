@@ -1,4 +1,4 @@
-#Koi Versioned#
+#Koi Versioned ![image](https://api.travis-ci.org/rahult/koi_versioned.png)
 
 Adds capability to ActiveRecord for storing drafts
 

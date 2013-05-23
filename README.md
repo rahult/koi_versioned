@@ -1,4 +1,4 @@
-#Koi Versioned ![image](https://api.travis-ci.org/rahult/koi_versioned.png)
+#Koi Versioned [![Build Status](https://travis-ci.org/rahult/koi_versioned.png?branch=master)](https://travis-ci.org/rahult/koi_versioned) [![Code Climate](https://codeclimate.com/github/rahult/koi_versioned.png)](https://codeclimate.com/github/rahult/koi_versioned)
 
 Adds capability to ActiveRecord for storing drafts
 

@@ -21,18 +21,18 @@ post.title = "Subversion to Git"
 post.draft!
 
 post.draft?
-true
+>> true
 
 post.title
-"Guide to Git"
+>> "Guide to Git"
 
 post.draft.title
-"Subversion to Git"
+>> "Subversion to Git"
 
 post.publish?
-true
+>> true
 
 post.title
-"Subversion to Git"
+>> "Subversion to Git"
 ```
 

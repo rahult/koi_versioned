@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Adds an ability to store draft for an ActiveRecord model"
   s.description = "Provides ability for an ActiveRecord model to store its attributes in a draft state."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_development_dependency 'rspec-rails', '~> 2.6'

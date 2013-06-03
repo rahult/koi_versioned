@@ -1,4 +1,4 @@
-#Koi Versioned [![Build Status](https://travis-ci.org/rahult/koi_versioned.png?branch=master)](https://travis-ci.org/rahult/koi_versioned) [![Code Climate](https://codeclimate.com/github/rahult/koi_versioned.png)](https://codeclimate.com/github/rahult/koi_versioned)
+#Koi Versioned [![Build Status](https://travis-ci.org/rahult/koi_versioned.png?branch=master)](https://travis-ci.org/rahult/koi_versioned) [![Code Climate](https://codeclimate.com/github/rahult/koi_versioned.png)](https://codeclimate.com/github/rahult/koi_versioned) [![Dependency Status](https://gemnasium.com/rahult/koi_versioned.png)](https://gemnasium.com/rahult/koi_versioned)
 
 Adds capability to ActiveRecord for storing drafts
 
@@ -9,7 +9,7 @@ Adds capability to ActiveRecord for storing drafts
 class Post < ActiveRecord::Base
   koi_draftable
 end
-``` 
+```
 
 
 ###Usage###
